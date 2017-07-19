@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Adjust these variables to what you require
-DOMAIN="rossman.zone"
-EMAIL="ronrossman@gmail.com"
+DOMAIN="domain.dns"
+EMAIL="email@address.com"
 # These shouldn't need to be changed
 LEP="/etc/letsencrypt/live"
 UEP="/usr/lib/unifi/data"
