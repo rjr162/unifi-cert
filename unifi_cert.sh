@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Adjust these variables to what you require
-DOMAIN="domain.dns"
-EMAIL="email@address.com"
+DOMAIN="dns.name"
+EMAIL="address@email.co"
 # These shouldn't need to be changed
 LEP="/etc/letsencrypt/live"
 UEP="/usr/lib/unifi/data"
@@ -18,6 +18,32 @@ function bagthis {
 # Create a new header line in the unifi-certbot.log log file
 
 echo -e "\n------- `date` ------" >> /var/log/unifi-certbot.log
+
+# Determine if certbot exists
+
+certbot --version 2>&1 /dev/null
+
+if [[ ${?} -gt 0 ]]; then
+  echo "Certbot Not Found... Installing certbot from eff.org" >> /var/log/unifi-certbot.log
+  wget -O certbot https://dl.eff.org/certbot-auto >> /var/log/unifi-certbot.log 2>&1
+  if [[ ${?} -gt 0 ]]; then
+    echo "Unable to wget certbot-auto from eff.org" >> /var/log/unifi-certbot.log >> /var/log/unifi-certbot.log
+    bagthis "Unable to wget certbot-auto from eff.org" "Please check /var/log/unifi-certbot.log for more information"
+    exit 1
+  mv certbot-auto /usr/bin/certbot >> /var/log/unifi-certbot.log 2>&1
+  chmod +x /usr/bin/certbot >> /var/log/unifi-certbot.log 2>&1
+
+  # Verify certbot is now working
+
+  certbot --version 2>&1 /dev/null
+
+  if [[ ${?} -gt 0 ]]; then
+    echo "Unable to run the certbot command. Exiting..." >> /var/log/unifi-certbot.log 2>&1
+    bagthis "Unable to run the certbot command." "Exiting..."
+    exit 1
+  fi
+
+fi
 
 # Determine if a Let's Encrypt certificate already exists or not. If not, create. If so, renew
 
