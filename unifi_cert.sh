@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Adjust these variables to what you require
-DOMAIN="your.domain.name"
-EMAIL="youremail@gmail.com"
+DOMAIN="rossman.zone"
+EMAIL="ronrossman@gmail.com"
 # These shouldn't need to be changed
 LEP="/etc/letsencrypt/live"
 UEP="/usr/lib/unifi/data"
@@ -30,7 +30,7 @@ fi
 # If certbot process fails, print error alert to console
 
 if [[ ${?} -gt 0 ]]; then
-  bagthis "Error running certbot" "Please check /var/log/unifi-chatbot.log for details"
+  bagthis "Error running certbot" "Please check /var/log/unifi-certbot.log for details"
   exit 1
 fi
 
