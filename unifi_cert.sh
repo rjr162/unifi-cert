@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Adjust these variables to what you require
-DOMAIN="dns.name"
-EMAIL="address@email.co"
+DOMAIN="example.com"
+EMAIL="example@example.com"
 # These shouldn't need to be changed
 LEP="/etc/letsencrypt/live"
 UEP="/usr/lib/unifi/data"
@@ -35,6 +35,7 @@ if [[ ${?} -gt 0 ]]; then
 
   # Verify certbot is now working
 
+  fi
   certbot --version 2>&1 /dev/null
 
   if [[ ${?} -gt 0 ]]; then
